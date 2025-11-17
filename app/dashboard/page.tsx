@@ -22,7 +22,7 @@ const dashboard = async() => {
       <Image src={"/hero.svg"} alt='hero-img' width={300} height={300}/>
       <h1 className='text-center font-bold text-4xl text-red-500 '>LAZYCODE EDITOR - Coding with comfort</h1>
       <p className='w-1/2 text-sm    text-center'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam, minima aspernatur. Hic accusamus ut laborum nemo et ipsum, vero beatae blanditiis harum magni ex quas deleniti explicabo error vel magnam cumque soluta maxime? Soluta laudantium ducimus rem earum amet veniam, eum ea iure ipsam. A.</p>
-      <Link href={"/"}>
+      <Link href={"/home"}>
           <Button>Get Started <ArrowUp/></Button>
       </Link>
 
