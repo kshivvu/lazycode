@@ -26,7 +26,8 @@ model User{
   name String?
   email String @unique
   image String?
-
+  myPlayground Playground[]
+  starredPlayground Starmark[]
   accounts Account[]
   role UserRole @default(USER)
   createdAt DateTime @default(now())
@@ -54,4 +55,43 @@ model Account {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
  
   @@unique([provider, providerAccountId])
+}
+
+enum Templates{
+  ReactJs
+  NextJs
+  Express
+  Vue
+  Angular
+  Hono
+}
+
+model Playground{
+  id String @id @default(cuid()) @map("_id")
+  title String
+  description String?
+  template Templates @default(ReactJs)
+  //todo -- add templatefiles here
+  Starmark  Starmark[]
+  userId String
+  user User @relation(fields: [userId], references: [id] ,onDelete: Cascade)
+
+
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Starmark{
+  id String @id @default(cuid()) @map("_id")
+  userId String
+  playgroundId String
+  isMarked Boolean
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+
+  user User @relation(fields: [userId],references: [id],onDelete: Cascade)
+  playground Playground @relation(fields: [playgroundId],references: [id],onDelete: Cascade)
+  @@unique([playgroundId,userId])
 }
