@@ -125,7 +125,7 @@ const ProjectTable = ({
                   </Badge>
                 </TableCell>
                 <TableCell>
-                  {format(new Date(project.createdAt), "MMM DD, YYYY")}
+                  {format(new Date(project.createdAt), "mm dd, yyyy")}
                 </TableCell>
                 <TableCell className="flex items-center gap-2">
                   <div className="h-8 w-8 rounded-full">

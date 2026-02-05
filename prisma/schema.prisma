@@ -58,19 +58,19 @@ model Account {
 }
 
 enum Templates{
-  ReactJs
-  NextJs
-  Express
-  Vue
-  Angular
-  Hono
+ REACT
+  NEXTJS
+  EXPRESS
+  VUE
+  ANGULAR
+  HONO
 }
 
 model Playground{
   id String @id @default(cuid()) @map("_id")
   title String
   description String?
-  template Templates @default(ReactJs)
+  template Templates @default(REACT)
   //todo -- add templatefiles here
   Starmark  Starmark[]
   userId String

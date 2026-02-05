@@ -8,10 +8,10 @@ export const createPlayground = async (data: {
   title: string;
   template: Templates;
   description?: string;
-  userId: string;
+  
 }) => {
   const { title, template, description } = data;
-  const user = currentUser();
+  const user = await currentUserServer();
   try {
     const playground = await db.playground.create({
       data: {

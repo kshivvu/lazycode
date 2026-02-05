@@ -1,39 +1,41 @@
+import { SidebarProvider } from "@/components/ui/sidebar"
+import { AppSidebar } from "@/features/dashboard/components/AppSidebar" 
+import { getAllPlaygroundForUser } from "@/features/home" 
+import type React from "react"
 
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
-import AppSidebar from "@/features/dashboard/components/AppSidebar"
-import { getAllPlaygroundForUser } from "@/features/home";
-import { cookies } from "next/headers"
+export default async function DashboardLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  const playgroundData = await getAllPlaygroundForUser()
 
-
-export default async function Layout({ children }: { children: React.ReactNode }) {
-  const cookieStore = await cookies();
-  const defaultOpen = cookieStore.get("sidebar_state")?.value === "true"
-  const allPlaygrounds= await getAllPlaygroundForUser();
-  const technologyIconMap:Record<string, string>={
-    REACT:"Zap",
-    NEXTJS:"LightBulb",
-    EXPRESS:"Database",
-    VUE:"Compass",
-    HONO:"FlameIcon",
-    ANGULAR:"Terminal",
-
+  // Store icon names (strings) instead of the components themselves
+  const technologyIconMap: Record<string, string> = {
+    REACT: "Zap",
+    NEXTJS: "Lightbulb",
+    EXPRESS: "Database",
+    VUE: "Compass",
+    HONO: "FlameIcon",
+    ANGULAR: "Terminal",
   }
 
+  const formattedPlaygroundData =
+    playgroundData?.map((item) => ({
+      id: item.id,
+      name: item.title,
+      starred: item.Starmark?.[0]?.isMarked || false,
+      // Pass the icon name as a string
+      icon: technologyIconMap[item.template] || "Code2", // Default to "Code2" if template not found
+    })) || []
 
-  const formattedPlaygrounds=allPlaygrounds?.map((playground)=>({
-    id:playground.id,
-    name:playground.title,
-    starred:playground.Starmark?.[0]?.isMarked||false,
-    icon:technologyIconMap[playground.template]||"Code2",
-  }))||[]
-  
   return (
-    <SidebarProvider className="flex min-h-screen " defaultOpen={defaultOpen}>
-      <AppSidebar initialPlaygroundProps={formattedPlaygrounds}/>
-      <main className="flex-1">
-        <SidebarTrigger />
-        {children}
-      </main>
+    <SidebarProvider>
+      <div className="flex min-h-screen w-full overflow-x-hidden">
+        {/* Pass the formatted data with string icon names */}
+        <AppSidebar initialPlaygroundData={formattedPlaygroundData} />
+        <main className="flex-1">{children}</main>
+      </div>
     </SidebarProvider>
   )
 }
