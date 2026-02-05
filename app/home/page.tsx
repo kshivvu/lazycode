@@ -20,9 +20,9 @@ import ProjectTable from './components/ProjectTable'
             <ProjectTable
             //@ts-ignore
             projects={playground||[]}
-            onDeleteProject={()=>{deleteProjectById}}
-            onUpdateProject={()=>{editProjectById}}
-            onDuplicateProject={()=>{duplicateProjectById}}
+            onDeleteProject={deleteProjectById}
+            onUpdateProject={editProjectById}
+            onDuplicateProject={duplicateProjectById}
 
             />
           )}

@@ -7,6 +7,9 @@ const page = async() => {
   const session=await getSession();
   const user=session?.user;
   if(user)redirect("/dashboard")
+    else{
+  redirect("/auth/sign-in")
+    }
   return (
     
     <div>
